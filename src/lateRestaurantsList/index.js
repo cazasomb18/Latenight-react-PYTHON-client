@@ -4,7 +4,7 @@ function lateRestaurantsList (props) {
 	const restaurants = props.restaurants
 	const restaurantsList = restaurants.map((restaurant, i)=> {
 		return (
-			{restaurant.}
+			{restaurants.}
 
 
 			)

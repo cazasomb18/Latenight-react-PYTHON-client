@@ -1,18 +1,18 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from 'react';
 import logo from './logo.svg';
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./App.css";
-import Login from './login';
+import Login, { Component } from './LoginControl';
+const apiKey = 'AIzaSyCbQ8Y7CHZUWrnEGUCqC8fNR4Kw1dfk5AE';
 
-import "bootstrap/dist/css/bootstrap.min.css";
 
-const My404 = () => {
-  return (
-    <div>
-      You are lost
-    </div>
-    )
-}
+// const My404 = () => {
+//   return (
+//     <div>
+//       You are lost
+//     </div>
+//     )
+// }
 
 class App extends React.Component {
   constructor(){
@@ -48,8 +48,8 @@ class App extends React.Component {
 
           
         </nav>
-        <h2>Late Night React Client API</h2>
-        <login/>
+        <h1>Late Night React Client API</h1>
+        <Login/>
       </div>
   
   )};
