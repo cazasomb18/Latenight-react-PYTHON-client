@@ -41,7 +41,12 @@ class RegisterControl extends React.Component{
 		.then()
 
 	}
-	
+	render(){
+		const isRegistered = this.state.IsRegistered;
+		let button;
+
+		if(isRegistered)
+	}
 
 
 

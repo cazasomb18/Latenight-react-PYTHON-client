@@ -19,7 +19,10 @@ class App extends React.Component {
     console.log('constructor');
     super()
     this.state = {
-      restaurants: []
+      restaurants: [],
+      username: '',
+      userId: '',
+      loggedIn: false
     }
   }
   componentDidMount (){
@@ -35,6 +38,14 @@ class App extends React.Component {
   //   }
 
   // }
+
+  setUserInfo = (userData) => {
+    console.log("function setUserInfo hit")
+    console.log("user data: ", userData)
+    // once we are sure this is working, we want to setState in this 
+    // component based on userData passed in as the argument
+  }
+
   render(){
 
     console.log("state: ", this.state)
@@ -49,10 +60,14 @@ class App extends React.Component {
           
         </nav>
         <h1>Late Night React Client API</h1>
-        <Login/>
+        { !this.state.loggedIn ? <Login setUserInfo={this.setUserInfo} /> : null}
+
       </div>
   
   )};
 };
+
+        // { !this.state.loggedIn ? <Register /> : null }
+        // { this.state.loggedIn ? <SomeOtherComponent /> : null }
 
 export default App;
