@@ -44,29 +44,31 @@ class LoginControl extends React.Component {
 		e.preventDefault();
 		try{
 
-			const loginResponse = await fetch('http://localhost:9000/auth/login', {
+			const loginResponse = await fetch('http://localhost:9000/auth/', {
 
 				method: 'POST',
 				credentials: 'include', 
 				body: JSON.stringify(this.state),
 				headers: {
+
 					'Content-Type': 'application/json'
+
 				}
 			});
 
 			const parsedResponse = await loginResponse.json();
 
-			console.log("parsed response: ", parsedResponse);
 
 			 if (parsedResponse.success === true) {
 
-				this.props.loggedIn = this.props.setState.loggedIn;
+				// this.props.setState(this.props.loggedIn === true);
+				this.parsedResponse.data.logged = true;
 
-				// console.log(parsedResponse.data);
+				console.log(parsedResponse.data);
 
 				this.props.setUserInfo(parsedResponse.data);
 
-				this.props.loggedIn(this.setState.userName, this.setState.password);
+				this.props.setState.loggedIn(this.setState.userName, this.setState.password);
 
 
 			}
@@ -79,6 +81,7 @@ class LoginControl extends React.Component {
 
 		}catch(err){
 			console.log(err);
+			console.error(err);
 
 		}
 		//submit login

@@ -1,6 +1,17 @@
 import React from 'react';
 
 class lateRestaurantsList extends React.Component {
+	constructor(props){
+		super(props);
+		this.setState({
+			
+		})
+
+
+
+
+
+	}
 
 	handleSubmit  = (e) => {
 		e.preventDefault();

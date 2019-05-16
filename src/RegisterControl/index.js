@@ -34,9 +34,10 @@ class RegisterControl extends React.Component{
 
 	}
 	handleChange = (e) => {
+		e.preventDefault();
 
-	this.setState({
-		[e.currentTarget.name]: e.currentTarget.value
+		this.setState({
+			[e.currentTarget.name]: e.currentTarget.value
 	})
 
 
@@ -45,7 +46,7 @@ class RegisterControl extends React.Component{
 		e.preventDefault();
 		try{
 
-			const registerResponse = await fetch('http://localhost:9000/auth/', {
+			const registerResponse = await fetch('http://localhost:9000/auth', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(this.state),
@@ -77,7 +78,8 @@ class RegisterControl extends React.Component{
 		console.log('register control state: ', this.state);
 		console.log('register control props: ', this.props);
 
-		return (
+		return 
+		(
 
 			<div>
 				<form onSubmit={this.handleSubmit}>
