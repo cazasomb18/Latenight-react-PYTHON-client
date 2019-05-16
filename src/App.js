@@ -1,8 +1,9 @@
+import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from 'react';
 import logo from './logo.svg';
 import "./App.css";
-import Login, { Component } from './LoginControl';
+import LoginControl from './LoginControl';
+import RegisterControl from './RegisterControl';
 const apiKey = 'AIzaSyCbQ8Y7CHZUWrnEGUCqC8fNR4Kw1dfk5AE';
 
 
@@ -15,9 +16,9 @@ const apiKey = 'AIzaSyCbQ8Y7CHZUWrnEGUCqC8fNR4Kw1dfk5AE';
 // }
 
 class App extends React.Component {
-  constructor(){
+  constructor(props){
     console.log('constructor');
-    super()
+    super(props);
     this.state = {
       restaurants: [],
       username: '',
@@ -25,30 +26,57 @@ class App extends React.Component {
       loggedIn: false
     }
   }
-  componentDidMount (){
-    console.log('cdm');
+  componentDidMount () {
+    //// INITIAL DOM RENDERING ///
+
+    console.log('cdm: ', );
 
     // this.getRestaurants()
 
+    this.getRestaurants();
+
+  }
+  getRestaurants = async () => {
+    try {
+
+
+
+      const restaurantListResponse = await fetch('http://localhost:3000/restaurants', {
+
+        method: 'GET',
+        credentials: 'include', 
+        body: JSON.stringify(this.state),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const restaurants = await restaurantListResponse.json()
+
+      this.setState({
+        restaurants: restaurants
+      })
+
+
+    }catch(err){
+
+      console.log('THERE WAS AN ERROR: ');
+      console.log(err);
+    }
   }
 
-  // getRestaurants = async () => {
-  //   try{
-  //     const response = await fetch('')
-  //   }
-
-  // }
-
   setUserInfo = (userData) => {
-    console.log("function setUserInfo hit")
-    console.log("user data: ", userData)
+    console.log("function setUserInfo calling");
+    console.log("user data: ", userData);
+    this.setState(userData);
+
+
     // once we are sure this is working, we want to setState in this 
     // component based on userData passed in as the argument
   }
 
   render(){
 
-    console.log("state: ", this.state)
+    console.log("App state: ", this.state)
 
   return (
       <div className="AppContainer">
@@ -56,18 +84,21 @@ class App extends React.Component {
           <a>
             <img src={logo} width="30" height="30" href="/"/>
           </a>
-
-          
         </nav>
+
         <h1>Late Night React Client API</h1>
-        { !this.state.loggedIn ? <Login setUserInfo={this.setUserInfo} /> : null}
+        <br/>
+        <br/>
+        { !this.props.loggedIn ? <LoginControl setUserInfo={this.setUserInfo} /> : null}
+        <br/>
+        <br/>
+        { !this.props.loggedIn ? <RegisterControl/> : null }
 
       </div>
   
   )};
 };
 
-        // { !this.state.loggedIn ? <Register /> : null }
         // { this.state.loggedIn ? <SomeOtherComponent /> : null }
 
 export default App;

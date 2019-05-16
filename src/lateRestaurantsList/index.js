@@ -1,6 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function lateRestaurantsList (props) {
+class lateRestaurantsList extends React.Component {
+
+	handleSubmit  = (e) => {
+		e.preventDefault();
+		
+	};
 	const restaurants = props.restaurants
 	const restaurantsList = restaurants.map((restaurant, i)=> {
 		return (
@@ -10,5 +15,7 @@ function lateRestaurantsList (props) {
 			)
 	})
 }
+
+export default LateRestaurantsList;
 
 ///CONTINUE THIS AFTER YOU HAVE THE LOGIN ESTABLISHED///
