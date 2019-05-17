@@ -7,8 +7,7 @@ class LoginControl extends React.Component {
 
 		this.state = {
 			userName: '',
-			password: '',
-			loggedIn: false
+			loggedIn: false,
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,33 +43,25 @@ class LoginControl extends React.Component {
 		e.preventDefault();
 		try{
 
-			const loginResponse = await fetch('http://localhost:9000/auth/', {
+			const loginResponse = await fetch('http://localhost:3000/auth/', {
 
 				method: 'POST',
 				credentials: 'include', 
 				body: JSON.stringify(this.state),
 				headers: {
-
 					'Content-Type': 'application/json'
-
 				}
 			});
-
 			const parsedResponse = await loginResponse.json();
-
-
 			 if (parsedResponse.success === true) {
 
-				// this.props.setState(this.props.loggedIn === true);
-				this.parsedResponse.data.logged = true;
+				this.props.setState(this.props.loggedIn === true);
+
+				// this.parsedResponse.data.loggedIn = true;
 
 				console.log(parsedResponse.data);
 
 				this.props.setUserInfo(parsedResponse.data);
-
-				this.props.setState.loggedIn(this.setState.userName, this.setState.password);
-
-
 			}
 
 			// if parsedResponse.success is true, then you know that 
@@ -95,41 +86,24 @@ class LoginControl extends React.Component {
 
 		// if yes, then setState to set login to true and also add user's info in state
 	}
-
-
 	render(){
-		this.setState(this.props.loggedIn);
+		
 		console.log("logincontrol state: ", this.state);
 		console.log("logincontrol props: ", this.props);
 
 
-
-
-		// let greeting;
-
-		// { this.loggedIn ? true : false }
-
-		// if (loggedIn){
-		// 	greeting = <UserGreeting onSubmit={this.handleSubmit}/>;
-		// } else {
-		// 	greeting = <GuestGreeting onSubmit={this.handleSubmit}/>;
-		// }
-
 		return (
 
 			<div>
-
-				<form onSubmit={this.handleSubmit}>
-				Username: <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
-				Password: <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
-				<input type="submit" value="Log In!"/>
+				<form onSubmit={this.props.handleSubmit}>
+					Username: <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
+					Password: <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
+					<input type="submit" value="Log In!"/>
 				</form>
-
 			</div>
+		)
 
-			);
-
-	};
+	}
 };
 
 export default LoginControl;
