@@ -7,9 +7,9 @@ class App extends React.Component{
 	super(props);
 
 	this.setState{
-			comment_id: '',
-			place_id: '',
-			userName: 
+			comment_id: this.props.comment_id,
+			place_id: this.props.place_id,
+			userName: this.props.userName
 	} try{
 
 	const ':place_id' = 

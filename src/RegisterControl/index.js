@@ -17,23 +17,18 @@ import React, { Component } from 'react';
 // }
 
 class RegisterControl extends React.Component{
-	constructor(props) {
-		super(props);
-			this.handleSubmit = this.handleSubmit.bind(this);
+constructor(props) {
+	super();
+	this.handleSubmit = this.handleSubmit.bind(this);
+	this.handleChange = this.handleChange.bind(this);
 
-			this.state = ({
-				username: '',
-				password: '',
-				email: '',
-			 	isRegistered: null
-			});
+			// this.state = ({
+			// 	userName: '',
+			// 	password: '',
+			// 	email: '',
+			//  	isRegistered: null
+			// });
 	}
-	componentDidMount(){
-
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-
-	};
 	handleChange = (e) => {
 		e.preventDefault();
 
@@ -48,7 +43,7 @@ class RegisterControl extends React.Component{
 		e.preventDefault();
 		try{
 
-			const registerResponse = await fetch('http://localhost:3000/auth/register', {
+			const registerResponse = await fetch('http://localhost:9000/auth/', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(this.state),
@@ -64,7 +59,7 @@ class RegisterControl extends React.Component{
 
 			if (parsedResponse.success === true) {
 				this.setState({
-					loggedIn: true
+					isRegistered: true,
 				});
 			}
 
@@ -77,19 +72,16 @@ class RegisterControl extends React.Component{
 
 	}
 	render(){
-
-		console.log('register control state: ', this.state);
-		console.log('register control props: ', this.props);
-
+		
 		return (
-			<div>
-				<form onSubmit={this.handleSubmit}>
-					Username: <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
-					Password: <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
-					Email: <input type="email" name="email" placeholder="email" onChange={this.handleChange}/>
-					<input type="submit" value="Register!"/>
-				</form>
-			</div>
+		<div>
+			<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.handleSubmit}>
+				Username: <input className="mr-sm-2" type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
+				Password: <input className="mr-sm-2" type="password" name="password" placeholder="********" onChange={this.handleChange}/>
+				Email: <input className="mr-sm-2" type="email" name="email" placeholder="email" onChange={this.handleChange}/>
+				<input className="mr-sm-2" type="submit" value="Register!"/>
+			</form>
+		</div>
 		)
 	}
 }
