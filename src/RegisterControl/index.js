@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // RegisteredGreeting = (props) => {
 // 	return <h2>Thank you for Registering with LateNight!</h2>
@@ -15,34 +15,21 @@ import React, { Component } from 'react';
 // 	}
 // 	return <UnregisteredGreeting/>;
 // }
-
 class RegisterControl extends React.Component{
 constructor(props) {
 	super();
 	this.handleSubmit = this.handleSubmit.bind(this);
 	this.handleChange = this.handleChange.bind(this);
-
-			// this.state = ({
-			// 	userName: '',
-			// 	password: '',
-			// 	email: '',
-			//  	isRegistered: null
-			// });
 	}
 	handleChange = (e) => {
 		e.preventDefault();
-
 		this.setState({
-
 			[e.currentTarget.name]: e.currentTarget.value
-
 		})
-
 	}
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		try{
-
 			const registerResponse = await fetch('http://localhost:9000/auth/', {
 				method: 'POST',
 				credentials: 'include',
@@ -51,28 +38,20 @@ constructor(props) {
 					'Content-Type': 'application/json'
 				}
 			})
-
-
 			const parsedResponse = await registerResponse.json();
-
 			console.log("parsedResponse: ", parsedResponse);
-
 			if (parsedResponse.success === true) {
 				this.setState({
 					isRegistered: true,
 				});
 			}
-
 		}catch(err){
 			console.log(err);
 			console.error(err)
-
 		}
 		///continue this logic to get the backend do to the work///
-
 	}
-	render(){
-		
+	render(){	
 		return (
 		<div>
 			<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.handleSubmit}>

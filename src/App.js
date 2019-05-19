@@ -1,14 +1,16 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from './logo.svg';
 import "./App.css";
 import RegisterControl from './RegisterControl';
 import LateRestaurantsList from './LateRestaurantsList';
+import UnderConstruction from './UnderConstruction';
+import Navbar from './navbar';
+import AppTitle from './TitleHeader';
 
 class App extends React.Component {
   constructor(props){
-    console.log('constructor');
-    super();
+    console.log('constructor',);
+    super(props);
     // this.setUserInfo = this.setUserInfo.bind(this);
     this.LoginControl = this.LoginControl;
     this.handleChange = this.handleChange.bind(this);
@@ -17,8 +19,8 @@ class App extends React.Component {
       restaurants: [],
       comments: [],
       userName: '',
-      loggedIn: false,
-      isRegistered: false,
+      loggedIn: null,
+      isRegistered: null,
 
     }
     // this.getRestaurants = this.getRestaurants.bind(this);
@@ -26,6 +28,8 @@ class App extends React.Component {
   componentDidMount () {
     //// INITIAL DOM RENDERING ///
     console.log('cdm: ', );
+    console.log('STATE: ', this.state);
+    console.log('PROPS: ', this.props);
     
 
   }
@@ -37,11 +41,8 @@ class App extends React.Component {
   
   handleLoginSubmit = async (e) => {
     e.preventDefault()
-
     try{
-
       const loginResponse = await fetch('http://localhost:9000/auth/login/', {
-
         method: 'POST',
         credentials: 'include', 
         body: JSON.stringify(this.state),
@@ -54,9 +55,9 @@ class App extends React.Component {
         this.setState({
           loggedIn: true,
         })
-
-        console.log(parsedResponse.data);
-
+        console.log("App state: ", this.state)
+        console.log("Props: ", this.props)
+        console.log(parsedResponse.success);
       }
 
       // if parsedResponse.success is true, then you know that 
@@ -107,9 +108,6 @@ class App extends React.Component {
     })
   }
 
-  //// UNDER CONSTRUCTION - CHECKED OUT TO DIFFERENT BRANCH IN ORDER TO TRY
-  //// CALLING API ON LATERESTAURANTSLIST /////
-
   render(){
 
     console.log("App state: ", this.state)
@@ -118,52 +116,33 @@ class App extends React.Component {
     return (
 
       <div className="AppContainer">
-        <h1 className="AppTitle">
-        Late Night API
-        </h1>
+        <AppTitle/>
+        <Navbar/>
 
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a width="30" height="30" href="/">HOME</a>
-            <a width="30" height="30" href="/">LOGIN</a>
-            <a width="30" height="30" href="/">LOGOUT</a>
-            <a width="30" height="30" href="/">REGISTER</a>
-        </nav>
-        <br/>
       <div>
-{!this.state.loggedIn ? <RegisterControl /> : null}
+{!this.state.loggedIn ? 
+      <RegisterControl /> : null}
       </div>
-          <br/>
-          <div>
-      
+      <br/>
+    
+    <div>      
 {!this.state.loggedIn ?
       <div>
-        <form onSubmit={this.state.handleLoginSubmit}>
-Username: <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
-Password: <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
+        <form onSubmit={this.handleLoginSubmit}>
+          Username: 
+          <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
+          Password: 
+          <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
           <input type="submit" value="Log In!"/>
         </form>
       </div> : null}
-
-          </div> 
+    </div> 
           <br/>
           <br/>
-          <div>
-            <LateRestaurantsList />
-          </div>
-      <div>
-        <br/>
-        <h2>
-        <br/>
-          LATE NIGHT IS STILL UNDER CONSTRUCTION!!!
-        </h2>
-        <br/>
-        <br/>
-        <h2>
-          FULL FUNCTIONALITY CRUD FORTHCOMING!!!
-        </h2>
-
-      </div>
-
+        <div>
+          <LateRestaurantsList/>
+          <UnderConstruction/>
+        </div>
     </div>
     )
   };
