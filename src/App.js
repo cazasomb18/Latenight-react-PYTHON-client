@@ -10,11 +10,12 @@ import AppTitle from './TitleHeader';
 class App extends React.Component {
   constructor(props){
     console.log('constructor',);
-    super(props);
+    super();
     // this.setUserInfo = this.setUserInfo.bind(this);
-    this.LoginControl = this.LoginControl;
+    // this.LoginControl = this.LoginControl;
     this.handleChange = this.handleChange.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+    // this.getRestaurants = this.getRestaurants.bind(this);
     this.state = {
       restaurants: [],
       comments: [],
@@ -23,14 +24,12 @@ class App extends React.Component {
       isRegistered: null,
 
     }
-    // this.getRestaurants = this.getRestaurants.bind(this);
   }
   componentDidMount () {
     //// INITIAL DOM RENDERING ///
-    console.log('cdm: ', );
+    console.log('cdm: ', this.state);
     console.log('STATE: ', this.state);
     console.log('PROPS: ', this.props);
-    
 
   }
 
@@ -39,8 +38,8 @@ class App extends React.Component {
 
   ////////// CONDITIONAL RENDERING LOGIC FOR RESTAURANTS LIST RELATED TO LOGIN STATE////////
   
-  handleLoginSubmit = async (e) => {
-    e.preventDefault()
+  handleLoginSubmit = async () => {
+    // e.preventDefault()
     try{
       const loginResponse = await fetch('http://localhost:9000/auth/login/', {
         method: 'POST',
@@ -107,7 +106,6 @@ class App extends React.Component {
 
     })
   }
-
   render(){
 
     console.log("App state: ", this.state)
@@ -120,29 +118,28 @@ class App extends React.Component {
         <Navbar/>
 
       <div>
-{!this.state.loggedIn ? 
-      <RegisterControl /> : null}
+{!this.state.loggedIn ? <RegisterControl /> : null}
       </div>
       <br/>
     
     <div>      
 {!this.state.loggedIn ?
-      <div>
-        <form onSubmit={this.handleLoginSubmit}>
-          Username: 
-          <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
-          Password: 
-          <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
-          <input type="submit" value="Log In!"/>
-        </form>
-      </div> : null}
+    <div>
+      <form onSubmit={this.handleLoginSubmit}>
+        Username: 
+        <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
+        Password: 
+        <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
+        <input type="submit" value="Log In!"/>
+      </form>
+      </div> : null }
     </div> 
-          <br/>
-          <br/>
-        <div>
-          <LateRestaurantsList/>
-          <UnderConstruction/>
-        </div>
+        <br/>
+        <br/>
+      <div>
+        <LateRestaurantsList/>
+        <UnderConstruction/>
+      </div>
     </div>
     )
   };
