@@ -1,35 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-// RegisteredGreeting = (props) => {
-// 	return <h2>Thank you for Registering with LateNight!</h2>
-// }
 
-// UnregisteredGreeting = (props) => {
-// 	return <h2>Please Register for LateNight</h2>
-// }
-
-// RegisterGreeting = (props) => {
-// 	const isRegistered.props.isRegistered;
-// 	if (isRegistered){
-// 		return <RegisteredGreeting/>;
-// 	}
-// 	return <UnregisteredGreeting/>;
-// }
-class RegisterControl extends React.Component{
+class RegisterControl extends Component {
 constructor(props) {
+	console.log(props);
 	super();
-	this.handleSubmit = this.handleSubmit.bind(this);
-	this.handleChange = this.handleChange.bind(this);
+	this.state = {
+		userName: '',
+		isRegistered: false
+		}
 	}
+
 	handleChange = (e) => {
 		e.preventDefault();
 		this.setState({
 			[e.currentTarget.name]: e.currentTarget.value
 		})
 	}
+
 	handleSubmit = async (e) => {
 		e.preventDefault();
+		console.log(this.state);
 		try{
+
 			const registerResponse = await fetch('http://localhost:9000/auth/', {
 				method: 'POST',
 				credentials: 'include',
@@ -38,6 +33,7 @@ constructor(props) {
 					'Content-Type': 'application/json'
 				}
 			})
+			console.log(registerResponse);
 			const parsedResponse = await registerResponse.json();
 			console.log("parsedResponse: ", parsedResponse);
 			if (parsedResponse.success === true) {
@@ -45,21 +41,31 @@ constructor(props) {
 					isRegistered: true,
 				});
 			}
+			const userData = {
+				userName: parsedResponse.data.userName,
+				isRegistered: true
+			}
+			this.props.setUserInfo(userData);
 		}catch(err){
 			console.log(err);
 			console.error(err)
 		}
 		///continue this logic to get the backend do to the work///
 	}
+
 	render(){	
 		return (
-		<div>
-			<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.handleSubmit}>
-				Username: <input className="mr-sm-2" type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
-				Password: <input className="mr-sm-2" type="password" name="password" placeholder="********" onChange={this.handleChange}/>
-				Email: <input className="mr-sm-2" type="email" name="email" placeholder="email" onChange={this.handleChange}/>
-				<input className="mr-sm-2" type="submit" value="Register!"/>
-			</form>
+		<div class="form">
+			<h1 class='/'>Register for LateNight</h1><br/>
+				<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.handleSubmit}>
+				<h4 className="mb-2 mr-sm-2 mb-sm-0">Username:</h4><br/>
+				<input className="mr-sm-2" type="text" name="userName" placeholder="username" onChange={this.handleChange}/><br/>
+				<h4 className="mb-2 mr-sm-2 mb-sm-0">Password:</h4><br/>
+				<input className="mr-sm-2" type="password" name="password" placeholder="********" onChange={this.handleChange}/><br/>
+				<h4 className="mb-2 mr-sm-2 mb-sm-0">Email:</h4><br/>
+				<input className="mr-sm-2" type="email" name="email" placeholder="email" onChange={this.handleChange}/><br/>
+				<input className="mr-sm-2" type="submit" value="Register!"/><br/>
+				</form>
 		</div>
 		)
 	}

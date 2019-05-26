@@ -1,36 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { route, Switch } from 'react-router-dom';
-import{ Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import RegisterControl from './RegisterControl';
 import LateRestaurantsList from './LateRestaurantsList';
 import UnderConstruction from './UnderConstruction';
-import Navbar from './navbar';
+import Header from './navbar';
 import AppTitle from './TitleHeader';
 
-class App extends React.Component {
-  constructor(props){
+class App extends Component {
+  constructor(){
     console.log('constructor',);
     super();
-    // this.setUserInfo = this.setUserInfo.bind(this);
-    // this.LoginControl = this.LoginControl;
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    // this.getRestaurants = this.getRestaurants.bind(this);
-    this.state = {
+    this.state = ({
       loggedIn: false,
+      isRegistered: false,
       userName: '',
       restaurants: [],
       comments: [],
-      // isRegistered: null,
 
-    }
+    })
   }
 
-  // setUserInfo = (user) => {
+  setUserInfo = (userInfo) => {
+    this.setState({
+      loggedIn: true,
+      isRegistered: true,
+      userName: userInfo.userName,
+    })
+    console.log("State of app before cdm: ", this.state);
 
-  // }
+  }
   componentDidMount () {
     //// INITIAL DOM RENDERING ///
     console.log('cdm: ', this.state);
@@ -72,30 +73,23 @@ class App extends React.Component {
   //   // once we are sure this is working, we want to setState in this 
   //   // component based on userData passed in as the argument 
   // }
+        // <LateRestaurantsList/>
+      // <div><UnderConstruction/></div>
   render(){
 
     console.log("App state: ", this.state)
     console.log("Props: ", this.props)
     return (
       <main>
-        <Navbar/>
+        <UnderConstruction/>
+        <Header/>
+        <UnderConstruction/>
         <Switch>
-          <Route path="/" render{ => <Home {}/> } />
-          <Route path="/" render{ => <Home {}/> } />
-          <Route path="/" render{ => <Home {}/> } />
-          <Route path="/" render{ => <Home {}/> } />
-          <Route path="/" render{ => <Home {}/> } />
-          <Route path="/" render{ => <Home {}/> } />
-          <Route path="/" render{ => <Home {}/> } />
+          <Route path="register" render={ (props) => <RegisterControl {...props} setUserInfo={this.setUserInfo}/> } />
         </Switch>
       </main>
-
-      <div>
-        <LateRestaurantsList/>
-        <UnderConstruction/>
-      </div>
-    )
-  };
+    );
+  }
 }
 
 export default App;
