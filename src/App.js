@@ -17,13 +17,17 @@ class App extends React.Component {
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     // this.getRestaurants = this.getRestaurants.bind(this);
     this.state = {
+      loggedIn: false,
+      userName: '',
       restaurants: [],
       comments: [],
-      userName: '',
-      loggedIn: null,
-      isRegistered: null,
+      // isRegistered: null,
 
     }
+  }
+
+  setUserInfo = (user) => {
+
   }
   componentDidMount () {
     //// INITIAL DOM RENDERING ///
