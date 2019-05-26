@@ -1,6 +1,8 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import { route, Switch } from 'react-router-dom';
+import{ Link } from 'react-router-dom';
 import RegisterControl from './RegisterControl';
 import LateRestaurantsList from './LateRestaurantsList';
 import UnderConstruction from './UnderConstruction';
@@ -13,8 +15,8 @@ class App extends React.Component {
     super();
     // this.setUserInfo = this.setUserInfo.bind(this);
     // this.LoginControl = this.LoginControl;
-    this.handleChange = this.handleChange.bind(this);
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     // this.getRestaurants = this.getRestaurants.bind(this);
     this.state = {
       loggedIn: false,
@@ -26,9 +28,9 @@ class App extends React.Component {
     }
   }
 
-  setUserInfo = (user) => {
+  // setUserInfo = (user) => {
 
-  }
+  // }
   componentDidMount () {
     //// INITIAL DOM RENDERING ///
     console.log('cdm: ', this.state);
@@ -42,39 +44,7 @@ class App extends React.Component {
 
   ////////// CONDITIONAL RENDERING LOGIC FOR RESTAURANTS LIST RELATED TO LOGIN STATE////////
   
-  handleLoginSubmit = async () => {
-    // e.preventDefault()
-    try{
-      const loginResponse = await fetch('http://localhost:9000/auth/login/', {
-        method: 'POST',
-        credentials: 'include', 
-        body: JSON.stringify(this.state),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const parsedResponse = await loginResponse.json();
-       if (parsedResponse.success === true) {
-        this.setState({
-          loggedIn: true,
-        })
-        console.log("App state: ", this.state)
-        console.log("Props: ", this.props)
-        console.log(parsedResponse.success);
-      }
 
-      // if parsedResponse.success is true, then you know that 
-      // parsedResponse.data contains the user information 
-
-      // and bc the login is successful, then you should  
-      // invoke this.props.setUserInfo(), passing in the parsedResponse.data 
-
-    }catch(err){
-      console.log(err);
-      console.error(err);
-
-    }
-  }
     //submit login
 
 
@@ -102,49 +72,28 @@ class App extends React.Component {
   //   // once we are sure this is working, we want to setState in this 
   //   // component based on userData passed in as the argument 
   // }
-  handleChange = (e) => {
-    e.preventDefault();
-    this.setState({
-
-      [e.currentTarget.name]: e.currentTarget.value
-
-    })
-  }
   render(){
 
     console.log("App state: ", this.state)
     console.log("Props: ", this.props)
-
     return (
-
-      <div className="AppContainer">
-        <AppTitle/>
+      <main>
         <Navbar/>
+        <Switch>
+          <Route path="/" render{ => <Home {}/> } />
+          <Route path="/" render{ => <Home {}/> } />
+          <Route path="/" render{ => <Home {}/> } />
+          <Route path="/" render{ => <Home {}/> } />
+          <Route path="/" render{ => <Home {}/> } />
+          <Route path="/" render{ => <Home {}/> } />
+          <Route path="/" render{ => <Home {}/> } />
+        </Switch>
+      </main>
 
-      <div>
-{!this.state.loggedIn ? <RegisterControl /> : null}
-      </div>
-      <br/>
-    
-    <div>      
-{!this.state.loggedIn ?
-    <div>
-      <form onSubmit={this.handleLoginSubmit}>
-        Username: 
-        <input type="text" name="userName" placeholder="username" onChange={this.handleChange}/>
-        Password: 
-        <input type="password" name="password" placeholder="********" onChange={this.handleChange}/>
-        <input type="submit" value="Log In!"/>
-      </form>
-      </div> : null }
-    </div> 
-        <br/>
-        <br/>
       <div>
         <LateRestaurantsList/>
         <UnderConstruction/>
       </div>
-    </div>
     )
   };
 }
