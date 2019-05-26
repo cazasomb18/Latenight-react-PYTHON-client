@@ -4,6 +4,7 @@ import "./App.css";
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RegisterControl from './RegisterControl';
+import Login from './Login';
 import LateRestaurantsList from './LateRestaurantsList';
 import UnderConstruction from './UnderConstruction';
 import Header from './navbar';
@@ -85,7 +86,8 @@ class App extends Component {
         <Header/>
         <UnderConstruction/>
         <Switch>
-          <Route path="register" render={ (props) => <RegisterControl {...props} setUserInfo={this.setUserInfo}/> } />
+          <Route path="/register" render={ (props) => <RegisterControl {...props} setUserInfo={this.setUserInfo}/> } />
+          <Route path="/login" render={ (props) => <Login {...props} setUserInfo={this.setUserInfo}/> } />
         </Switch>
       </main>
     );
