@@ -25,7 +25,7 @@ constructor(props) {
 		e.preventDefault();
 		console.log(this.state);
 		try{			
-			const registerResponse = await fetch(process.env.REACT_BACK_END_URL + '/auth/register', {
+			const registerResponse = await fetch(process.env.REACT_BACK_END_URL + 'auth/register', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(this.state),

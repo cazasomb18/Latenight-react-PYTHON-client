@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Route, Switch } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import RegisterControl from './RegisterControl';
 import Login from './Login';
 import LateRestaurantsList from './LateRestaurantsList';
@@ -25,17 +25,18 @@ class App extends Component {
   }
 
   setUserInfo = (userInfo) => {
+    userInfo.userName = this.
     this.setState({
       loggedIn: true,
       isRegistered: true,
       userName: userInfo.userName,
     })
-    console.log("State of app before cdm: ", this.state);
+    console.log("APP State before cdm: ", this.state);
 
   }
   componentDidMount () {
     //// INITIAL DOM RENDERING ///
-    console.log('cdm: ', this.state);
+    console.log('cdm: ');
     console.log('STATE: ', this.state);
     console.log('PROPS: ', this.props);
 

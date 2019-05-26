@@ -1,6 +1,6 @@
 import React from 'react';
 
-class lateRestaurantsList extends React.Component {
+class LateRestaurantsList extends React.Component {
 	constructor(props){
 	super();
 	this.handleClick.bind(this);
@@ -61,4 +61,4 @@ class lateRestaurantsList extends React.Component {
 	}
 };
 
-export default lateRestaurantsList;
+export default LateRestaurantsList;
