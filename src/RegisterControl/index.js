@@ -59,13 +59,13 @@ constructor(props) {
 		<div className="form">
 			<h1 className='/register-title'>Register for LateNight</h1><br/>
 				<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.handleSubmit}>
-					<h4 className="mb-2 mr-sm-2 mb-sm-0">Username:</h4><br/>
+					<h4 className="mb-2 mr-sm-2 mb-sm-0">Username:</h4>
 					<input className="mr-sm-2" type="text" name="userName" placeholder="username" onChange={this.handleChange}/><br/>
-					<h4 className="mb-2 mr-sm-2 mb-sm-0">Password:</h4><br/>
+					<h4 className="mb-2 mr-sm-2 mb-sm-0">Password:</h4>
 					<input className="mr-sm-2" type="password" name="password" placeholder="********" onChange={this.handleChange}/><br/>
-					<h4 className="mb-2 mr-sm-2 mb-sm-0">Email:</h4><br/>
+					<h4 className="mb-2 mr-sm-2 mb-sm-0">Email:</h4>
 					<input className="mr-sm-2" type="email" name="email" placeholder="email" onChange={this.handleChange}/><br/>
-					<input className="mr-sm-2" type="submit" value="Register!"/><br/>
+					<input className="mr-sm-2" type="submit" value="Register!"/>
 				</form>
 		</div>
 		)
