@@ -82,6 +82,7 @@ class App extends Component {
     console.log("Props: ", this.props)
     return (
       <main>
+        <AppTitle/>
         <Header/>
         <Switch>
           <Route path="/register" render={ (props) => <RegisterControl {...props} setUserInfo={this.setUserInfo}/> } />
