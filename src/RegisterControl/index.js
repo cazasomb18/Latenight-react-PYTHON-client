@@ -6,12 +6,13 @@ import Login from '../Login';
 
 class RegisterControl extends Component {
 constructor(props) {
-	console.log(props);
 	super();
 	this.state = {
 		userName: '',
 		isRegistered: false
 		}
+	console.log(this.state);
+	console.log(this.props);
 	}
 
 	handleChange = (e) => {
@@ -20,33 +21,30 @@ constructor(props) {
 			[e.currentTarget.name]: e.currentTarget.value
 		})
 	}
-
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(this.state);
+		const backendUrl = process.env.REACT_BACK_END_URL;
 		try{			
-			const registerResponse = await fetch(process.env.REACT_BACK_END_URL + '/auth', {
+			const registerResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'auth/register', {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify(this.state),
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			})
+			});
 			console.log(registerResponse);
 			const parsedResponse = await registerResponse.json();
 			console.log("parsedResponse: ", parsedResponse);
 			if (parsedResponse.success === true) {
 				this.setState({
-					isRegistered: true,
-				});
+					isRegistered: true
+				})
 			}
-			const userInfo = {
-				userName: parsedResponse.data.userName,
-				isRegistered: true
-			}
-			this.props.setUserInfo(userInfo);
-			// this.props.history.push("/login"); ??? redirect to login?
+			// this.props.setUserInfo(userInfo);
+			this.props.history.push("/login");
+			/// REDIRECT TO ^^^ LOGIN?///
 		}catch(err){
 			console.log(err);
 			console.error(err)
@@ -57,7 +55,7 @@ constructor(props) {
 	render(){	
 		return (
 		<div className="form">
-			<h1 className='/register-title'>Register for LateNight</h1><br/>
+			<h1 className='register-title'>Register for LateNight</h1><br/>
 				<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.handleSubmit}>
 					<h4 className="mb-2 mr-sm-2 mb-sm-0">Username:</h4>
 					<input className="mr-sm-2" type="text" name="userName" placeholder="username" onChange={this.handleChange}/><br/>

@@ -23,13 +23,14 @@ class App extends Component {
 
     })
   }
-
   setUserInfo = (userInfo) => {
-    this.setState({
-      loggedIn: true,
-      isRegistered: true,
-      userName: userInfo.userName,
-    })
+    if (this.state.loggedIn === true){
+      this.setState({
+        loggedIn: true,
+        isRegistered: true,
+        userName: userInfo.userName
+      })
+    }
     console.log("State of app before cdm: ", this.state);
 
   }
@@ -59,16 +60,8 @@ class App extends Component {
     // if yes, then setState to set login to true and also add user's info in state
 
 
-//// we've got to rebuild the login component on THIS PAGE!!!//////
   // }
-  // setUserInfo = (userData) => {
-
-  //   this.setState({
-  //     userName: this.props.userName,
-  //     loggedIn: true
-  //   })
-
-  //   console.log("function setUserInfo calling");
+  // setUserInfo = (user nction setUserInfo calling");
   //   console.log("user data: ", userData);
 
   //   // once we are sure this is working, we want to setState in this 
@@ -78,8 +71,6 @@ class App extends Component {
       // <div><UnderConstruction/></div>
   render(){
 
-    console.log("App state: ", this.state)
-    console.log("Props: ", this.props)
     return (
       <main>
         <Header/>
@@ -93,3 +84,4 @@ class App extends Component {
 }
 
 export default App;
+
