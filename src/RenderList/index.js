@@ -1,6 +1,7 @@
 import React from 'react';
+import showModal from '../ShowModal'
 
-////this.state.restaurants.
+
 
 const RenderListComponent = (props) => {
 
@@ -8,7 +9,7 @@ const RenderListComponent = (props) => {
 	const renderList = restaurants.map((restaurant, i) => {
 		return(
 			<li key={i}>
-				Name: <a>{restaurant.name}</a><br/>
+				Name: <a href={process.env.REACT_APP_BACK_END_URL + restaurant.place_id} onClick={showModal}> {restaurant.name}</a><br/>
 				Address: {restaurant.vicinity}<br/>
 				ID: {restaurant.place_id}<br/>
 			</li>
@@ -22,7 +23,6 @@ const RenderListComponent = (props) => {
 			</ul>
 		)
 }
-
 
 
 

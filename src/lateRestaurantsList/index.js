@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RenderList from '../RenderList';
+import showModal from '../ShowModal';
 
 class LateRestaurantsList extends React.Component {
 	constructor(props){
@@ -21,7 +22,6 @@ class LateRestaurantsList extends React.Component {
 			console.error(err);
 		}
 	}
-
 	getRestaurants = async (e) => {
 		e.preventDefault();
 		try {
@@ -56,7 +56,7 @@ class LateRestaurantsList extends React.Component {
 					<input className="mr-sm-2" type="text" name="superfulous" placeholder="AWWW YEAAAAHHHH" onChange={this.handleChange}/><br/>
 					<input className="mr-sm-2" type="submit" value="What's Open?!"/>
 				</form>
-
+				{this.state.showModal ? <RenderList restaurants={this.state.restaurants}/> : null}
 				{this.state.showList ? <RenderList restaurants={this.state.restaurants}/> : null}
 
 			</div>

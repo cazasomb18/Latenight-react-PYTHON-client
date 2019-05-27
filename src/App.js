@@ -73,9 +73,6 @@ class App extends Component {
       [e.currentTarget.name]: e.currentTarget.value 
     })
   }
-  showList(){
-
-  }
   ////////// CONDITIONAL RENDERING LOGIC FOR RESTAURANTS LIST RELATED TO LOGIN STATE////////
   // {this.state.loggedIn ? <LateRestaurantsList /> : null}
   ////////// CONDITIONAL RENDERING LOGIC FOR RESTAURANTS LIST RELATED TO LOGIN STATE////////
@@ -92,9 +89,6 @@ class App extends Component {
     //     </div>
     //   ) 
     // })
-
-
-
 
 
   render(){
