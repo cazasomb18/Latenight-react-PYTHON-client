@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import RenderList from '../RenderList';
 
 class LateRestaurantsList extends React.Component {
 	constructor(props){
 		super();
 		this.state = {
-			restaurants: []
+			restaurants: [],
+			showList: false
 		}
 	}
 	componentDidMount(){
@@ -20,9 +21,10 @@ class LateRestaurantsList extends React.Component {
 			console.error(err);
 		}
 	}
+
 	getRestaurants = async (e) => {
 		e.preventDefault();
-		try{
+		try {
 			const getRestaurantsResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'restaurants', {
 
 				method: 'GET',
@@ -34,14 +36,15 @@ class LateRestaurantsList extends React.Component {
 			const parsedResponse = await getRestaurantsResponse.json();
 			console.log(parsedResponse) // object
 			this.setState({
-				restaurants: parsedResponse.allRestaurants.results // 
+				restaurants: parsedResponse.allRestaurants.results, // 
+				showList: true
 			})
 
-		}catch(err) {
+		} catch(err) {
 			console.error(err);
 		}
 	}
-	render(){
+	render() {
 		// this.props.history.push("/home")
 		console.log("this.state in render() in LateRestaurantList: ", this.state);		
 		return(
@@ -53,6 +56,9 @@ class LateRestaurantsList extends React.Component {
 					<input className="mr-sm-2" type="text" name="superfulous" placeholder="AWWW YEAAAAHHHH" onChange={this.handleChange}/><br/>
 					<input className="mr-sm-2" type="submit" value="What's Open?!"/>
 				</form>
+
+				{this.state.showList ? <RenderList restaurants={this.state.restaurants}/> : null}
+
 			</div>
 		)
 	}
