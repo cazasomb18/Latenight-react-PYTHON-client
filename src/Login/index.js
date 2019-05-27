@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import RegisterControl from '../RegisterControl';
 
 class Login extends Component {
   constructor(props){
@@ -33,11 +33,11 @@ class Login extends Component {
         this.setState({
           loggedIn: true
         })
-        console.log("App state: ", this.state)
-        console.log("Props: ", this.props)
+        console.log("App state: ", this.state);
+        console.log("Props: ", this.props);
         console.log(parsedResponse.success);
       }
-      
+      this.props.history.push('/restaurantList');
 		      // if parsedResponse.success is true, then you know that 
 		      // parsedResponse.data contains the user information 
 

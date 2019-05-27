@@ -10,7 +10,7 @@ LateRestaurantsDetails = async (e) => {
 			credentials: 'include',
 			body: JSON.stringify(this.state),
 			headers: {
-				'Content-Type': 'Access-Control-Allow-origin'
+				'Content-Type': 'application/json'
 			}
 		})
 		const parsedResponse = await restaurantDetails.json()
