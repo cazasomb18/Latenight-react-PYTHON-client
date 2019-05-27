@@ -24,18 +24,20 @@ class Login extends Component {
         credentials: 'include', 
         body: JSON.stringify(this.state),
         headers: {
-          'Content-Type': 'Access-Control-Allow-Origin'
-        }
-      })
+          'Content-Type': 'application/json'
+        }})
+      console.log(loginResponse);
       const parsedResponse = await loginResponse.json();
-       if (parsedResponse.success === true) {
+      console.log('parsedResponse: ', parsedResponse);
+      if (parsedResponse.success === true) {
         this.setState({
-          loggedIn: true,
+          loggedIn: true
         })
         console.log("App state: ", this.state)
         console.log("Props: ", this.props)
         console.log(parsedResponse.success);
       }
+      
 		      // if parsedResponse.success is true, then you know that 
 		      // parsedResponse.data contains the user information 
 

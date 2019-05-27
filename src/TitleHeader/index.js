@@ -1,6 +1,7 @@
 import React from 'react';
 
 const AppTitle = (props) => {
+	const name = props.userName
 	return (
         <h1 className="AppTitle">
         Late Night API
@@ -11,3 +12,5 @@ const AppTitle = (props) => {
 };
 
 export default AppTitle;
+
+ // {this.state.loggedIn ? <name = userName}

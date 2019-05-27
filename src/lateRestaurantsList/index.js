@@ -1,4 +1,4 @@
-import React from 'react';
+import React from /*{ Component } */'react';
 
 class LateRestaurantsList extends React.Component {
 	constructor(props){
