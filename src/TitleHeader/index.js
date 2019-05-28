@@ -4,7 +4,7 @@ const AppTitle = (props) => {
 	const name = props.userName
 	return (
         <h1 className="AppTitle">
-        Late Night API
+        Late Night Bites
         </h1>
 
 		)
@@ -13,4 +13,4 @@ const AppTitle = (props) => {
 
 export default AppTitle;
 
- // {this.state.loggedIn ? <name = userName}
+ // {this.state.loggedIn ? ({name = userName})

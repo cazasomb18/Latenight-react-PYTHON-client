@@ -1,64 +1,73 @@
-import React from /*{ Component } */'react';
+import React from 'react';
+import RenderList from '../RenderList';
+import ShowModal from '../ShowModal';
 
 class LateRestaurantsList extends React.Component {
 	constructor(props){
-	super();
-	this.handleClick.bind(this);
-	this.getRestaurants.bind(this);
-	this.state = {
-
-		restaurants: []
-
+		super();
+		this.state = {
+			restaurants: [],
+			showList: false,
+			isOpen: false,
 		}
 	}
 	componentDidMount(){
-		console.log("cdm - lateRestaurantsList Component: ", this.state, this.props);
+		console.log("cdm - GetRestaurantIds Component: ", this.state, this.props);
 	}
-	handleClick = (e) => {
-		e.preventDefault();
-		// e.getRestaurants();
-	}
-
-/// FROM GOOGLE PLACES API: /////
-/// Note: If you omit the fields parameter from a Find Place request, ///
-/// only the place_id for the result will be returned ///
-
-
-	getRestaurants = async (e) => {
+	handleClick = async (e) => {
 		e.preventDefault();
 		try{
-			const getRestaurantsIdUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.8781,-87.6298&radius=5000&type=restaurant&keyword=open&keyword=late&key=' + process.env.REACT_APP_API_KEY;
-			const getRestaurantsResponse = await fetch(getRestaurantsIdUrl, {
+			await this.getRestaurants();
 
-						method: 'GET',
-						credentials: 'include',
-						body: JSON.strinfigy(this.state),
-						headers: {
-							'Content-Type': 'Access-Control-Allow-origin'
-						}})
-
-			console.log(getRestaurantsResponse);
-			const parsedResponse = await getRestaurantsResponse.json();
-			console.log(parsedResponse)
-
-/////////NEED LOGIC THAT WILL MAP THE RETURNED RESPONSE FROM INITIAL QUERY THEN GRAB THE PLACE_ID///////////////
-
-			}
-			catch(err) {
-			console.log(err);
+		} catch(err){
 			console.error(err);
 		}
-
 	}
-	render(){
-		return (
-			
-			<form>
-				<button onClick={this.handleClick}>Generate lateRestaurants</button>
-			</form>
-			
+	getRestaurants = async (e) => {
+		e.preventDefault();
+		try {
+			const getRestaurantsResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'restaurants', {
+
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const parsedResponse = await getRestaurantsResponse.json();
+			console.log(parsedResponse) // object
+			this.setState({
+				restaurants: parsedResponse.allRestaurants.results, // 
+				showList: true
+			})
+
+		} catch(err) {
+			console.error(err);
+		}
+	}
+	toggleModal = () => {
+		this.setState({
+			isOpen: !this.state.isOpen
+	    });
+	}
+	render() {
+		// this.props.history.push("/home")
+		console.log("this.state in render() in LateRestaurantList: ", this.state);		
+		return(
+			<div>
+				<h2>LATE RESTAURANTS LIST</h2>
+				<button onClick={this.getRestaurants}>GET LIST</button>
+				<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.getRestaurants}>
+					<h4 className="mb-2 mr-sm-2 mb-sm-0">ARE YOU HUNGRY?!</h4>
+					<input className="mr-sm-2" type="text" name="superfulous" placeholder="AWWW YEAAAAHHHH" onChange={this.handleChange}/><br/>
+					<input className="mr-sm-2" type="submit" value="What's Open?!"/>
+				</form>
+				{this.props.show ? <ShowModal onClick={this.props.onClose}/> : null}
+				{this.state.showList ? <RenderList restaurants={this.state.restaurants}/> : null}
+			</div>
 		)
 	}
-};
+
+}
 
 export default LateRestaurantsList;

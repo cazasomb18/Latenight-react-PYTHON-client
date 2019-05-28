@@ -3,12 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Route, Switch, Link } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
+
 import RegisterControl from './RegisterControl';
 import Login from './Login';
-import LateRestaurantsList from './LateRestaurantsList';
-import UnderConstruction from './UnderConstruction';
-import Header from './navbar';
+import Header from './Header';
 import AppTitle from './TitleHeader';
+import LateList from './LateList';
+import LateRestaurantsList from './LateRestaurantsList';
+import HomeContainer from './Home';
 
 class App extends Component {
   constructor(){
@@ -19,7 +21,7 @@ class App extends Component {
       isRegistered: false,
       userName: '',
       restaurants: [],
-      comments: [],
+      comments: []
 
     })
   }
@@ -28,7 +30,9 @@ class App extends Component {
       this.setState({
         loggedIn: true,
         isRegistered: true,
-        userName: userInfo.userName,
+        // userName: userInfo.userName,
+        userName: this.userName
+
       })
     console.log("APP State before cdm: ", this.state);
     }
@@ -40,34 +44,55 @@ class App extends Component {
     console.log('PROPS: ', this.props);
 
   }
+  logOut = async (e) => {
+    e.preventDefault();
+    try{
+      const logoutResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }})
+      console.log(logoutResponse);
+      const parsedResponse = await logoutResponse.json();
+      console.log('parsedResponse: ', parsedResponse);
+      if (parsedResponse){
+        this.setState({
+          loggedIn: false
+        })
+        console.log("App state: ", this.state);
+      }
+    }catch(err){
+      console.log(err);
+      console.error(err);
 
+    }
+  }
+  handleChange = (e) => {
+    e.preventDefault();
+    this.setState({
+
+      [e.currentTarget.name]: e.currentTarget.value 
+    })
+  }
   ////////// CONDITIONAL RENDERING LOGIC FOR RESTAURANTS LIST RELATED TO LOGIN STATE////////
   // {this.state.loggedIn ? <LateRestaurantsList /> : null}
-
   ////////// CONDITIONAL RENDERING LOGIC FOR RESTAURANTS LIST RELATED TO LOGIN STATE////////
   
 
-    //submit login
+    // const mapRestaurantData = this.state.restaurants.map((restaurant, i) => {
+    //   return (
+    //     <div>
+    //       <li key={restaurant.id}>
+    //         <p className="faux" data={i} onClick={this.handleClick}> Name: {restaurant.name}</p>
+    //         Address: {restaurant.vicinity}
+    //         ID: {restaurant.place_id}
+    //       </li>
+    //     </div>
+    //   ) 
+    // })
 
 
-    // use fetch to send request to backend, hit auth route, and get response 
-
-    // based on response from backend, either log them in or don't 
-
-    // (if not, nice UI to display message "username or password incorrect")
-
-    // if yes, then setState to set login to true and also add user's info in state
-
-
-  // }
-  // setUserInfo = (user nction setUserInfo calling");
-  //   console.log("user data: ", userData);
-
-  //   // once we are sure this is working, we want to setState in this 
-  //   // component based on userData passed in as the argument 
-  // }
-        // <LateRestaurantsList/>
-      // <div><UnderConstruction/></div>
   render(){
 
     return (
@@ -75,8 +100,11 @@ class App extends Component {
         <AppTitle/>
         <Header/>
         <Switch>
+          <Route path="/home" onClick={this.showList} />
           <Route path="/register" render={ (props) => <RegisterControl {...props} setUserInfo={this.setUserInfo}/> } />
           <Route path="/login" render={ (props) => <Login {...props} setUserInfo={this.setUserInfo}/> } />
+          <Route path="/restaurantList" component={LateRestaurantsList}/>
+          <Route path="/logout" onClick={this.logOut}/>
         </Switch>
       </main>
     );

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import Login from '../Login';
+// import { Route, Redirect } from 'react-router-dom';
+// import Login from '../Login';
 
 
 class RegisterControl extends Component {
@@ -24,7 +23,6 @@ constructor(props) {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(this.state);
-		const backendUrl = process.env.REACT_BACK_END_URL;
 		try{			
 			const registerResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'auth/register', {
 				method: 'POST',
@@ -32,10 +30,9 @@ constructor(props) {
 				body: JSON.stringify(this.state),
 				headers: {
 					'Content-Type': 'application/json'
-				}
-			});
+				}})
 			console.log(registerResponse);
-			const parsedResponse = await registerResponse.json();
+			const parsedResponse = await registerResponse.json;
 			console.log("parsedResponse: ", parsedResponse);
 			if (parsedResponse.success === true) {
 				this.setState({
