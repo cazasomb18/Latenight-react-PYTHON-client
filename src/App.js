@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Route, Switch } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import RegisterControl from './RegisterControl';
 import Login from './Login';
 import Header from './Header';
@@ -20,7 +19,7 @@ class App extends Component {
       isRegistered: false,
       userName: '',
       restaurants: [],
-      comments: [],
+      comments: []
 
     })
   }
@@ -29,7 +28,7 @@ class App extends Component {
       this.setState({
         loggedIn: true,
         isRegistered: true,
-        userName: userInfo.userName
+        userName: this.userName
       })
     }
     console.log("State of app before cdm: ", this.state);

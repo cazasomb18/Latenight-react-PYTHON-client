@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import RenderList from '../RenderList';
-import showModal from '../ShowModal';
+import ShowModal from '../ShowModal';
 
 class LateRestaurantsList extends React.Component {
 	constructor(props){
 		super();
 		this.state = {
 			restaurants: [],
-			showList: false
+			showList: false,
+			isOpen: false,
 		}
 	}
 	componentDidMount(){
@@ -44,6 +45,11 @@ class LateRestaurantsList extends React.Component {
 			console.error(err);
 		}
 	}
+	toggleModal = () => {
+		this.setState({
+			isOpen: !this.state.isOpen
+	    });
+	}
 	render() {
 		// this.props.history.push("/home")
 		console.log("this.state in render() in LateRestaurantList: ", this.state);		
@@ -56,9 +62,8 @@ class LateRestaurantsList extends React.Component {
 					<input className="mr-sm-2" type="text" name="superfulous" placeholder="AWWW YEAAAAHHHH" onChange={this.handleChange}/><br/>
 					<input className="mr-sm-2" type="submit" value="What's Open?!"/>
 				</form>
-				{this.state.showModal ? <RenderList restaurants={this.state.restaurants}/> : null}
+				{this.props.show ? <ShowModal onClick={this.props.onClose}/> : null}
 				{this.state.showList ? <RenderList restaurants={this.state.restaurants}/> : null}
-
 			</div>
 		)
 	}
