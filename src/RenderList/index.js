@@ -11,14 +11,18 @@ const RenderListComponent = (props) => {
 				Name: <a href={'/faux'}> {restaurant.name}</a><br/>
 				Address: {restaurant.vicinity}<br/>
 				ID: {restaurant.place_id}<br/>
+				<form>
+					<label>
+						<textarea/><br/>
+						<input type='submit' value='POST'/><br/>
+					</label>
+				</form>
 			</li>
 		)
-
 	})
 		return (
 			<ul>
 			{renderList}
-			<ShowModal />
 			</ul>
 		)
 }

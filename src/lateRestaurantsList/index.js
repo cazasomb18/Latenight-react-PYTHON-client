@@ -1,6 +1,7 @@
 import React from 'react';
 import RenderList from '../RenderList';
-import ShowModal from '../ShowModal';
+
+
 
 class LateRestaurantsList extends React.Component {
 	constructor(props){
@@ -8,13 +9,15 @@ class LateRestaurantsList extends React.Component {
 		this.state = {
 			restaurants: [],
 			showList: false,
-			isOpen: false,
+			isOpen: false
 		}
 	}
+	
 	componentDidMount(){
-		console.log("cdm - GetRestaurantIds Component: ", this.state, this.props);
+		console.log("cdm - LateRestaurantsList Component: ", this.state, this.props);
 	}
-	handleClick = async (e) => {
+
+	handleClickRestaurants = async (e) => {
 		e.preventDefault();
 		try{
 			await this.getRestaurants();
@@ -23,21 +26,27 @@ class LateRestaurantsList extends React.Component {
 			console.error(err);
 		}
 	}
+	/// API Call
 	getRestaurants = async (e) => {
 		e.preventDefault();
 		try {
-			const getRestaurantsResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'restaurants', {
+			const getRestaurantsResponse = await fetch(process.env.REACT_APP_BACK_END_URL + 'restaurants/restaurants', {
 
 				method: 'GET',
 				credentials: 'include',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'Access-Control-Allow-Origin',
+					'Content-Type': 'Access-Control-Allow-Methods',
+					'Content-Type': 'Access-Control-Allow-Headers'
 				}
 			})
+			console.log(typeof(getRestaurantsResponse));
+			console.log(getRestaurantsResponse);
 			const parsedResponse = await getRestaurantsResponse.json();
 			console.log(parsedResponse) // object
+			console.log(parsedResponse);
 			this.setState({
-				restaurants: parsedResponse.allRestaurants.results, // 
+				restaurants: parsedResponse,
 				showList: true
 			})
 
@@ -45,24 +54,42 @@ class LateRestaurantsList extends React.Component {
 			console.error(err);
 		}
 	}
+	////NEED TO GET THE FUCKING BACKEND COMMENTS ROUTE WORKING FIRST GODDAMNIT!!!!////
+	postComment = async (e) => {
+		e.preventDefault();
+		try{
+			const postCommentResponse = await fetch(process.env.REACT_APP_BACK_END_URL + '', {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'Access-Control-Allow-Origin',
+					'Content-Type': 'Access-Control-Allow-Methods',
+					'Content-Type': 'Access-Control-Allow-Headers'
+				}
+			})
+			this.setState({
+				comments: postCommentResponse
+				// showComments: true
+			})
+
+		}catch(err){
+			console.error(err)
+		}
+	}
 	toggleModal = () => {
 		this.setState({
-			isOpen: !this.state.isOpen
-	    });
+			isOpen: false
+	    })
 	}
-	render() {
-		// this.props.history.push("/home")
+
+	render(){
 		console.log("this.state in render() in LateRestaurantList: ", this.state);		
 		return(
-			<div>
-				<h2>LATE RESTAURANTS LIST</h2>
-				<button onClick={this.getRestaurants}>GET LIST</button>
+			<div>			
 				<form className="mb-2 mr-sm-2 mb-sm-0" onSubmit={this.getRestaurants}>
 					<h4 className="mb-2 mr-sm-2 mb-sm-0">ARE YOU HUNGRY?!</h4>
-					<input className="mr-sm-2" type="text" name="superfulous" placeholder="AWWW YEAAAAHHHH" onChange={this.handleChange}/><br/>
-					<input className="mr-sm-2" type="submit" value="What's Open?!"/>
+					<input className="mr-sm-2 mb-sm-0" type="submit" value="Find Late Bytes"/>
 				</form>
-				{this.props.show ? <ShowModal onClick={this.props.onClose}/> : null}
 				{this.state.showList ? <RenderList restaurants={this.state.restaurants}/> : null}
 			</div>
 		)

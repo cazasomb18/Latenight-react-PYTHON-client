@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Route, Switch, Link } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
-
 import RegisterControl from './RegisterControl';
 import Login from './Login';
 import Header from './Header';
@@ -52,7 +50,8 @@ class App extends Component {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
-        }})
+        }
+      })
       console.log(logoutResponse);
       const parsedResponse = await logoutResponse.json();
       console.log('parsedResponse: ', parsedResponse);
